@@ -111,7 +111,6 @@ data "http" "github-chkp-repository" {
 
 resource "aws_cloudformation_stack" "cloudguard-master-account" {
   name = "cloudguard-master-account-onboarding"
-  permission_model  = "SERVICE_MANAGED"
   capabilities      = ["CAPABILITY_IAM"]
 
   template_body = data.http.github-chkp-repository.response_body
