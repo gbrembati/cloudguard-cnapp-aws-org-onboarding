@@ -132,7 +132,8 @@ resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
   auto_deployment { enabled = true }
   operation_preferences {
     region_order = [ var.region ]
-    max_concurrent_count = 100
+    max_concurrent_percentage = 100
+    failure_tolerance_percentage = 100
   }
 
   template_body = data.http.github-chkp-repository.response_body
