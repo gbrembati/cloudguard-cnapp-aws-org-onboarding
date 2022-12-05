@@ -17,6 +17,9 @@ Remember to copy these two values, you will need to enter them in the *.tfvars* 
 You would need to give as a parameter the External ID that you can obtain in the onboarding wizard:
 ![AWS External ID](/zimages/aws-external-id.jpg)
 
+You would need to enable Trust Access with AWS Organization:      
+![AWS Trust Access](/zimages/aws-enable-trust-access.jpg)
+
 ## How to use it
 The only thing that you need to do is changing the __*terraform.tfvars*__ file located in this directory.
 
