@@ -119,6 +119,10 @@ resource "aws_cloudformation_stack" "cloudguard-master-account" {
     RoleExternalTrustSecret = var.cspm-aws-external-id
     UniqueSuffix            = var.cspm-aws-role-suffix
   }
+  tags = {
+    "vendor"      = "check-point"
+    "application" = "cloudguard-cnapp"
+  }
 }
 resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
   name = "cloudguard-org-onboarding"
@@ -136,6 +140,11 @@ resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
     CloudGuardAwsAccountId  = lookup(var.chkp-account-region-list, var.chkp-account-region)[0]
     RoleExternalTrustSecret = var.cspm-aws-external-id
     UniqueSuffix            = var.cspm-aws-role-suffix
+  }
+
+  tags = {
+    "vendor"      = "check-point"
+    "application" = "cloudguard-cnapp"
   }
 }
 resource "aws_cloudformation_stack_set_instance" "cft-deploy-organization" {
