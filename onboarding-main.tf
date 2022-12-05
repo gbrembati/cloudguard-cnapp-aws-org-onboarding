@@ -102,12 +102,25 @@ resource "dome9_cloudaccount_aws" "onboard-aws-account" {
       region             = "ap_northeast_3"
     }
   }
+  depends_on = [aws_cloudformation_stack_set.cloudguard-org-onboarding, aws_cloudformation_stack.cloudguard-master-account]
 }
 
 data "http" "github-chkp-repository" {
   url = "https://raw.githubusercontent.com/dome9/unified-onboarding/Release/cft/generated/templates/role_based/permissions_readonly_cft.yml"
 }
 
+resource "aws_cloudformation_stack" "cloudguard-master-account" {
+  name = "cloudguard-master-account-onboarding"
+  permission_model  = "SERVICE_MANAGED"
+  capabilities      = ["CAPABILITY_IAM"]
+
+  template_body = data.http.github-chkp-repository.response_body
+  parameters = {
+    CloudGuardAwsAccountId  = "723885542676"            // EU = 723885542676 // US = 634729597623 
+    RoleExternalTrustSecret = var.cspm-aws-external-id
+    UniqueSuffix            = var.cspm-aws-role-suffix
+  }
+}
 resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
   name = "cloudguard-org-onboarding"
   permission_model  = "SERVICE_MANAGED"
