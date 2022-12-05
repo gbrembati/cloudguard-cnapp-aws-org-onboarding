@@ -102,7 +102,7 @@ resource "dome9_cloudaccount_aws" "onboard-aws-account" {
       region             = "ap_northeast_3"
     }
   }
-  depends_on = [aws_cloudformation_stack_set.cloudguard-org-onboarding, aws_cloudformation_stack.cloudguard-master-account]
+  depends_on = [aws_cloudformation_stack_set_instance.cft-deploy-organization, aws_cloudformation_stack.cloudguard-master-account]
 }
 
 data "http" "github-chkp-repository" {
@@ -136,5 +136,13 @@ resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
     CloudGuardAwsAccountId  = "723885542676"            // EU = 723885542676 // US = 634729597623 
     RoleExternalTrustSecret = var.cspm-aws-external-id
     UniqueSuffix            = var.cspm-aws-role-suffix
+  }
+}
+resource "aws_cloudformation_stack_set_instance" "cft-deploy-organization" {
+  region         = var.region
+  stack_set_name = aws_cloudformation_stack_set.cloudguard-org-onboarding.name
+
+  deployment_targets {
+    organizational_unit_ids = [data.aws_organizations_organization.aws-organization.roots[0].id]
   }
 }
