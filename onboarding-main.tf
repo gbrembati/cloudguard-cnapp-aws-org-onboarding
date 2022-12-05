@@ -111,7 +111,7 @@ data "http" "github-chkp-repository" {
 
 resource "aws_cloudformation_stack" "cloudguard-master-account" {
   name = "cloudguard-master-account-onboarding"
-  capabilities      = ["CAPABILITY_IAM"]
+  capabilities      = ["CAPABILITY_NAMED_IAM","CAPABILITY_IAM"]
 
   template_body = data.http.github-chkp-repository.response_body
   parameters = {
@@ -123,7 +123,7 @@ resource "aws_cloudformation_stack" "cloudguard-master-account" {
 resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
   name = "cloudguard-org-onboarding"
   permission_model  = "SERVICE_MANAGED"
-  capabilities      = ["CAPABILITY_IAM"]
+  capabilities      = ["CAPABILITY_NAMED_IAM","CAPABILITY_IAM"]
 
   auto_deployment { enabled = true }
   operation_preferences {
