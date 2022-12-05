@@ -32,3 +32,19 @@ variable "cspm-aws-role-suffix" {
   type = string
   default = ""
 }
+
+variable "chkp-account-region-list" {
+  description = "List of CloudGuard Account ID and API Endpoint"
+  default = {
+    Europe = ["723885542676","https://api.eu1.dome9.com/v2/"],
+    America = ["634729597623","https://api.dome9.com/v2/"]
+  }
+}
+locals {
+  allowed_region_name = ["Europe","America"]
+  validate_region_name = index(local.allowed_region_name, var.chkp-account-region)
+}
+variable "chkp-account-region" {
+  description = "Insert your Cloudguard AWS Account residency region"
+  type = string
+}

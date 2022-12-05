@@ -31,6 +31,8 @@ aws-secret-key  = "xxxxxxxxxxxxxx"
 cspm-key-id     = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 cspm-key-secret = "xxxxxxxxxxxxxxxxxxxx"
 cspm-aws-external-id = "xxxxxxxxxxxxxxxxxxxx"
+
+chkp-account-region = "Europe"     // Use either Europe or America
 ```
 If you want (or need) to further customize other project details, you can change defaults in the different __*name-variables.tf*__ files.   
 Here you will also able to find the descriptions that explains what each variable is used for.

@@ -20,5 +20,5 @@ provider "aws" {
 provider "dome9" {
   dome9_access_id   = var.cspm-key-id
   dome9_secret_key  = var.cspm-key-secret
-  base_url = "https://api.eu1.dome9.com/v2/"  // EU - api.eu1.dome9.com/v2 | US - api.dome9.com/v2
+  base_url = lookup(var.chkp-account-region-list, var.chkp-account-region)[1]
 }

@@ -115,7 +115,7 @@ resource "aws_cloudformation_stack" "cloudguard-master-account" {
 
   template_body = data.http.github-chkp-repository.response_body
   parameters = {
-    CloudGuardAwsAccountId  = "723885542676"            // EU = 723885542676 // US = 634729597623 
+    CloudGuardAwsAccountId  = lookup(var.chkp-account-region-list, var.chkp-account-region)[0]
     RoleExternalTrustSecret = var.cspm-aws-external-id
     UniqueSuffix            = var.cspm-aws-role-suffix
   }
@@ -133,7 +133,7 @@ resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
 
   template_body = data.http.github-chkp-repository.response_body
   parameters = {
-    CloudGuardAwsAccountId  = "723885542676"            // EU = 723885542676 // US = 634729597623 
+    CloudGuardAwsAccountId  = lookup(var.chkp-account-region-list, var.chkp-account-region)[0]
     RoleExternalTrustSecret = var.cspm-aws-external-id
     UniqueSuffix            = var.cspm-aws-role-suffix
   }

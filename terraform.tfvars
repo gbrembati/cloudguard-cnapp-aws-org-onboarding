@@ -5,3 +5,5 @@ aws-secret-key  = "xxxxxxxxxxxxxx"
 cspm-key-id     = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 cspm-key-secret = "xxxxxxxxxxxxxxxxxxxx"
 cspm-aws-external-id = "xxxxxxxxxxxxxxxxxxxx"
+
+chkp-account-region = "Europe"     // Use either Europe or America
