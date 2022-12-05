@@ -1,0 +1,30 @@
+# This workflow installs the latest version of Terraform CLI and configures the Terraform CLI configuration file
+# with an API token for Terraform Cloud (app.terraform.io). On pull request events, this workflow will run
+# `terraform init`, `terraform fmt`, and `terraform plan` (speculative plan via Terraform Cloud). On push events
+# to the "main" branch, `terraform apply` will be executed.
+
+name: 'Spectral Control'
+
+on:
+  push:
+    branches:
+    - "main"
+
+env:
+  SPECTRAL_DSN: ${{ secrets.SPECTRAL_DSN }}
+
+jobs:      
+  spectral-pipeline:
+    name: 'Spectral Security Control'
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Spectral Setup & Scan
+      uses: spectralops/spectral-github-action@v2
+      with:
+        spectral-dsn: ${{ secrets.SPECTRAL_DSN }}
+        spectral-args: scan --ok --include-tags base,audit,iac --table --with-tf-modules
