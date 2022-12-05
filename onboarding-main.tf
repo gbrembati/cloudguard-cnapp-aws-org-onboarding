@@ -131,7 +131,7 @@ resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
 
   auto_deployment { enabled = true }
   operation_preferences {
-    region_order = ["eu-west-1"]
+    region_order = [ var.region ]
     max_concurrent_count = 100
   }
 
