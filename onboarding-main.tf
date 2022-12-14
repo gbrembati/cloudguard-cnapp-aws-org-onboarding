@@ -1,11 +1,5 @@
 data "aws_organizations_organization" "aws-organization" {}
 
-# Create a dedicated Org-unit under the root one
-resource "dome9_organizational_unit" "my-org-unit" {
-  name      = "AWS Environments"
-  parent_id = "00000000-0000-0000-0000-000000000000"
-}
-
 resource "dome9_cloudaccount_aws" "onboard-aws-account" {
   count = length(data.aws_organizations_organization.aws-organization.accounts)
 
@@ -15,7 +9,6 @@ resource "dome9_cloudaccount_aws" "onboard-aws-account" {
     secret = var.cspm-aws-external-id
     type   = "RoleBased"
   } 
-  organizational_unit_id = dome9_organizational_unit.my-org-unit.id
   net_sec {
     regions {
       new_group_behavior = "ReadOnly"
