@@ -3,13 +3,12 @@ This Terraform project is intended to be used to onboard an entire AWS organizat
 What it does is configuring, via **Terraform**, an existing CloudGuard CSPM Portal and AWS master account.      
  
 ## How to start?
-You would need to have a CloudGuard tenant, you can create one via *Infinity Portal* by clicking the image below:      
-[<img src="https://www.checkpoint.com/wp-content/themes/checkpoint-theme-v2/images/checkpoint-logo.png">](https://portal.checkpoint.com/create-account)
+You would need to have a CloudGuard tenant, you can create one via *Infinity Portal* by clicking: [Register Here](https://portal.checkpoint.com/create-account)
 
-## Get API credentials in your CloudGuard CNAPP Portal
+## Get API credentials in your CloudGuard CNAP Portal
 Then you will need to get the API credentials that you will be using with Terraform to onboard the accounts.
 
-![Architectural Design](/zimages/create-cpsm-serviceaccount.jpg)
+![Architectural Design](/zimages/create-cnapp-serviceaccount.jpg)
 
 Remember to copy these two values, you will need to enter them in the *.tfvars* file later on.
 
