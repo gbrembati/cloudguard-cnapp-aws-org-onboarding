@@ -1,11 +1,12 @@
 data "aws_organizations_organization" "aws-organization" {}
 
 resource "dome9_cloudaccount_aws" "onboard-aws-account" {
-  count = length(data.aws_organizations_organization.aws-organization.accounts)
+  for_each    = { for account in toset(data.aws_organizations_organization.aws-organization.accounts) : account.name => account } 
 
-  name  = data.aws_organizations_organization.aws-organization.accounts[count.index].name
+  name  = each.value.name 
+
   credentials  {
-    arn    = "arn:aws:iam::${data.aws_organizations_organization.aws-organization.accounts[count.index].id}:role/CloudGuard-Connect-RO-role${var.cspm-aws-role-suffix}"
+    arn    = "arn:aws:iam::${each.value.id}:role/CloudGuard-Connect-RO-role${var.cspm-aws-role-suffix}"
     secret = var.cspm-aws-external-id
     type   = "RoleBased"
   } 
