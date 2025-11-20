@@ -105,9 +105,9 @@ data "http" "github-chkp-repository" {
 
 resource "aws_cloudformation_stack" "cloudguard-master-account" {
   name = "cloudguard-master-account-onboarding"
-  capabilities      = ["CAPABILITY_NAMED_IAM","CAPABILITY_IAM"]
-
+  capabilities  = ["CAPABILITY_NAMED_IAM","CAPABILITY_IAM"]
   template_body = data.http.github-chkp-repository.response_body
+
   parameters = {
     CloudGuardAwsAccountId  = lookup(var.chkp-account-region-list, var.chkp-account-region)[0]
     RoleExternalTrustSecret = var.cspm-aws-external-id
@@ -126,8 +126,8 @@ resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
   auto_deployment { enabled = true }
   operation_preferences {
     region_order = [ var.region ]
-    max_concurrent_percentage = 100
-    failure_tolerance_percentage = 100
+    max_concurrent_percentage     = 100
+    failure_tolerance_percentage  = 100
   }
 
   template_body = data.http.github-chkp-repository.response_body
@@ -143,8 +143,8 @@ resource "aws_cloudformation_stack_set" "cloudguard-org-onboarding" {
   }
 }
 resource "aws_cloudformation_stack_set_instance" "cft-deploy-organization" {
-  region         = var.region
   stack_set_name = aws_cloudformation_stack_set.cloudguard-org-onboarding.name
+  stack_set_instance_region = var.region
 
   deployment_targets {
     organizational_unit_ids = [data.aws_organizations_organization.aws-organization.roots[0].id]
